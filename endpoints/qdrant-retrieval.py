@@ -5,11 +5,6 @@ import httpx
 from dify_plugin import Endpoint
 from werkzeug import Request, Response
 
-OLLAMA_URL = "http://host.docker.internal:11434"
-QDRANT_URL = "http://host.docker.internal:6334"
-QDRANT_API_KEY = "difyai123456"
-COLLECTION = "pdf_pages_vision"
-EMBED_MODEL = "nomic-embed-text"
 MIN_CONTENT_LEN = 100
 _BLANK_MARKERS = ("the image is blank", "no diagrams, charts, or visual schemas", "no content was provided",
                   "no visible content to extract", "image or page content was not provided",
@@ -29,20 +24,27 @@ def _is_junk(content: str) -> bool:
     return False
 
 
-def embed(text: str) -> list[float]:
+def embed(text: str, ollama_url: str, embed_model: str) -> list[float]:
     resp = httpx.post(
-        f"{OLLAMA_URL}/api/embed",
-        json={"model": EMBED_MODEL, "input": text, "keep_alive": -1},
+        f"{ollama_url}/api/embed",
+        json={"model": embed_model, "input": text, "keep_alive": -1},
         timeout=60,
     )
     resp.raise_for_status()
     return resp.json()["embeddings"][0]
 
 
-def search(vector: list[float], top_k: int, score_threshold: float) -> list[dict]:
+def search(
+    vector: list[float],
+    top_k: int,
+    score_threshold: float,
+    qdrant_url: str,
+    qdrant_api_key: str,
+    collection: str,
+) -> list[dict]:
     resp = httpx.post(
-        f"{QDRANT_URL}/collections/{COLLECTION}/points/search",
-        headers={"api-key": QDRANT_API_KEY, "Content-Type": "application/json"},
+        f"{qdrant_url}/collections/{collection}/points/search",
+        headers={"api-key": qdrant_api_key, "Content-Type": "application/json"},
         json={
             "vector": vector,
             "limit": top_k,
@@ -71,14 +73,20 @@ class QdrantRetrievalEndpoint(Endpoint):
         top_k = int(retrieval_setting.get("top_k", 5))
         score_threshold = float(retrieval_setting.get("score_threshold", 0.3))
 
+        qdrant_url = settings.get("qdrant_url", "").rstrip("/")
+        qdrant_api_key = settings.get("qdrant_api_key", "")
+        collection = settings.get("collection", "")
+        ollama_url = settings.get("ollama_url", "").rstrip("/")
+        embed_model = settings.get("embed_model", "")
+
         if not query:
             return Response(
                 json.dumps({"records": []}), status=200, content_type="application/json"
             )
 
         try:
-            vector = embed(query)
-            hits = search(vector, max(top_k * 10, 50), score_threshold)
+            vector = embed(query, ollama_url, embed_model)
+            hits = search(vector, max(top_k * 10, 50), score_threshold, qdrant_url, qdrant_api_key, collection)
         except Exception as e:
             return Response(
                 json.dumps({"error": str(e)}),
