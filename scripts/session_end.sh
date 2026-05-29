@@ -1,13 +1,12 @@
 #!/usr/bin/env sh
-# Stages session docs and commits. Run after agent updates docs at !end.
+# Stage session docs at !end. No interactive prompts — commit and merge manually.
 set -e
-git add docs/dev/sessions/ docs/dev/open_points.md docs/dev/plans.md
-echo "--- Staged changes ---"
+
+git add docs/dev/sessions/ docs/dev/open_points.md docs/dev/plans.md PROJECT_MAP.md 2>/dev/null; true
+
+echo "--- Staged ---"
 git status --short
-printf "\nCommit message: "
-read -r MSG
-git commit -m "$MSG"
-printf "\nPush to remote? [y/N]: "
-read -r PUSH
-[ "$PUSH" = "y" ] && git push -u origin "$(git rev-parse --abbrev-ref HEAD)"
-echo "Done."
+echo ""
+echo "Next:"
+echo "  git commit -m 'session: <summary>'"
+echo "  make session-merge     # squash into main and push"

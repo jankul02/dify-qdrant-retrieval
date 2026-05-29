@@ -1,16 +1,43 @@
 settings:
-  - name: api_key
+  - name: qdrant_url
+    type: text-input
+    required: true
+    default: "http://host.docker.internal:6334"
+    label:
+      en_US: Qdrant URL
+    placeholder:
+      en_US: http://host.docker.internal:6334
+  - name: qdrant_api_key
     type: secret-input
     required: true
+    default: "difyai123456"
     label:
-      en_US: API key
-      zh_Hans: API key
-      pt_BR: API key
-      ja_JP: APIキー
+      en_US: Qdrant API Key
     placeholder:
-      en_US: Please input your API key
-      zh_Hans: 请输入你的 API key
-      pt_BR: Please input your API key
-      ja_JP: APIキーを入力してください
+      en_US: Enter Qdrant API key
+  - name: collection
+    type: text-input
+    required: true
+    default: "pdf_pages_vision"
+    label:
+      en_US: Collection Name
+    placeholder:
+      en_US: pdf_pages_vision
+  - name: ollama_url
+    type: text-input
+    required: true
+    default: "http://host.docker.internal:11434"
+    label:
+      en_US: Ollama URL
+    placeholder:
+      en_US: http://host.docker.internal:11434
+  - name: embed_model
+    type: text-input
+    required: true
+    default: "nomic-embed-text"
+    label:
+      en_US: Embedding Model
+    placeholder:
+      en_US: nomic-embed-text
 endpoints:
   - endpoints/qdrant-retrieval.yaml

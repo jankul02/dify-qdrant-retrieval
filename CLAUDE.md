@@ -36,13 +36,14 @@ When developer types `!end`:
 3. Append to `docs/dev/sessions/history.md`.
 4. Update `PROJECT_MAP.md` if files were added or renamed.
 5. Update `docs/dev/open_points.md` and `docs/dev/plans.md` as needed.
-6. Run `sh scripts/session_end.sh`.
+6. Run `sh scripts/session_end.sh` (stages docs, prints next steps — no interactive prompts).
+7. Developer runs in terminal: `git commit -m 'session: <summary>'` then `make session-merge`.
 
 ---
 
 ## Rules
 
 - **Always ask before:** `git commit`, `git push`, running any `sh scripts/*`, deleting files, force push.
-- **Show before editing:** state what file you are about to change and why; wait for acknowledgement on non-trivial edits.
+- **File edits:** state what file you are about to change and why — the tool permission prompt is the confirmation, do not ask twice.
 - Keep files short — split when >150 lines.
 - No features beyond the session goal.
