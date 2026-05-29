@@ -42,6 +42,7 @@ When developer types `!end`:
 
 ## Rules
 
-- Confirm before destructive operations (delete, force push, drop data).
+- **Always ask before:** `git commit`, `git push`, running any `sh scripts/*`, deleting files, force push.
+- **Show before editing:** state what file you are about to change and why; wait for acknowledgement on non-trivial edits.
 - Keep files short — split when >150 lines.
 - No features beyond the session goal.

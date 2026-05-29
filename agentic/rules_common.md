@@ -10,8 +10,10 @@
 - No features beyond what is asked.
 - Every logic change must be immediately reflected in the relevant doc (doc-sync).
 
-## Safety
-- Confirm before: deleting files, force push, dropping data.
+## Safety — always ask first
+- `git commit`, `git push`, `sh scripts/*` — always confirm with developer before running.
+- File edits — state the file and the change before applying; wait for non-trivial ones.
+- Deleting files, force push, dropping data — confirm explicitly.
 - When scope is unclear: ask, don't assume.
 - Never commit secrets (`.env`, tokens, credentials).
 
