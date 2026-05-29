@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 
-.PHONY: help dev run pack lint format check map cleanup clean
+.PHONY: help dev run pack lint format check map cleanup clean session-merge
 
 help: ## Show available targets
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
@@ -61,3 +61,13 @@ cleanup: ## Remove temp files and caches
 clean: cleanup ## Remove build artifacts + temp files
 	rm -rf dist/ build/
 	@echo "✓ Clean."
+
+# ── Session ───────────────────────────────────────────────────────────────────
+
+session-merge: ## Squash-merge current session branch into main, then push
+	@BRANCH=$$(git rev-parse --abbrev-ref HEAD); \
+	echo "→ Squash-merging $$BRANCH → main..."; \
+	git checkout main && \
+	git merge --squash $$BRANCH && \
+	echo "✓ Changes staged on main." && \
+	echo "  Run: git commit -m 'session: <summary>' && git push"

@@ -36,7 +36,8 @@ When developer types `!end`:
 3. Append to `docs/dev/sessions/history.md`.
 4. Update `PROJECT_MAP.md` if files were added or renamed.
 5. Update `docs/dev/open_points.md` and `docs/dev/plans.md` as needed.
-6. Run `sh scripts/session_end.sh`.
+6. Run `sh scripts/session_end.sh` (stages docs, prints next steps — no interactive prompts).
+7. Developer runs in terminal: `git commit -m 'session: <summary>'` then `make session-merge`.
 
 ---
 
