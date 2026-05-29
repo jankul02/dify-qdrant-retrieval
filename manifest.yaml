@@ -1,0 +1,37 @@
+version: 0.0.1
+type: plugin
+author: jankul02
+name: qdrant-retrieval
+label:
+  en_US: qdrant-retrieval
+  ja_JP: qdrant-retrieval
+  zh_Hans: qdrant-retrieval
+  pt_BR: qdrant-retrieval
+description:
+  en_US: Qdrant vector search for Dify External Knowledge Base
+  ja_JP: Qdrant vector search for Dify External Knowledge Base
+  zh_Hans: Qdrant vector search for Dify External Knowledge Base
+  pt_BR: Qdrant vector search for Dify External Knowledge Base
+icon: icon.svg
+icon_dark: icon-dark.svg
+resource:
+  memory: 268435456
+  permission:
+    endpoint:
+      enabled: true
+plugins:
+  endpoints:
+    - group/qdrant-retrieval.yaml
+meta:
+  version: 0.0.1
+  arch:
+    - amd64
+    - arm64
+  runner:
+    language: python
+    version: "3.12"
+    entrypoint: main
+  minimum_dify_version: null
+created_at: 2026-05-11T14:20:42.063624+02:00
+privacy: PRIVACY.md
+verified: false

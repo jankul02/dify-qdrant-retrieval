@@ -1,0 +1,27 @@
+# Continue config — https://docs.continue.dev/reference/config-yaml
+# Adjust models to match your local/cloud setup.
+
+name: "Dify Qdrant Retrieval Plugin"
+
+models:
+  - name: Claude Sonnet
+    provider: anthropic
+    model: claude-sonnet-4-6
+    apiKey: $ANTHROPIC_API_KEY
+    roles: [chat, edit, apply]
+
+  - name: Ollama (local)
+    provider: ollama
+    model: AUTODETECT
+    roles: [autocomplete]
+
+contextProviders:
+  - name: file
+  - name: folder
+  - name: code
+  - name: currentFile
+
+rules:
+  - file: agentic/rules_common.md
+  - file: agentic/rules_project.md
+  - file: agentic/rules_continue.md

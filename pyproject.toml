@@ -1,0 +1,8 @@
+# Tooling config only — this is a Dify plugin, not an installable package.
+# Runtime deps are in requirements.txt (used by the Dify plugin runner).
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
