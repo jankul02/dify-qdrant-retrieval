@@ -12,7 +12,7 @@
 
 ## Safety — always ask first
 - `git commit`, `git push`, `sh scripts/*` — always confirm with developer before running.
-- File edits — state the file and the change before applying; wait for non-trivial ones.
+- File edits — state the file and the change before applying; the tool permission prompt is the confirmation, do not ask twice.
 - Deleting files, force push, dropping data — confirm explicitly.
 - When scope is unclear: ask, don't assume.
 - Never commit secrets (`.env`, tokens, credentials).

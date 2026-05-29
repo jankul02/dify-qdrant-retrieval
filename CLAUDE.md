@@ -43,6 +43,6 @@ When developer types `!end`:
 ## Rules
 
 - **Always ask before:** `git commit`, `git push`, running any `sh scripts/*`, deleting files, force push.
-- **Show before editing:** state what file you are about to change and why; wait for acknowledgement on non-trivial edits.
+- **File edits:** state what file you are about to change and why — the tool permission prompt is the confirmation, do not ask twice.
 - Keep files short — split when >150 lines.
 - No features beyond the session goal.
