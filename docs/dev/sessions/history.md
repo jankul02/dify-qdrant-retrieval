@@ -44,6 +44,16 @@
 
 ---
 
+## 2026-05-30 — continue-rules-migration
+
+| Field | Value |
+|-------|-------|
+| Branch | main (direct) |
+| Goal | Agentic setup takeover — port Continue rules from testdifyollama |
+| Outcome | Done — `.continue/config.yaml` annotated as ignored (Continue only loads global config); `.continue/rules/` created with 5 rule files: `session-prompt.md`, `preferterminalforconfig.md`, `nomarkdownintools.md`, `surgical-python-edits.md`, `project-quickref.md`; `agentic/rules_continue.md` corrected to terminal-only file edits (`cat << EOF`) |
+
+---
+
 ## 2026-05-29 — dify-settings-params
 
 | Field | Value |

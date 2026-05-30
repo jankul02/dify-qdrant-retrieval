@@ -20,7 +20,8 @@ Spatial index: functional area → files. Update at every `!end`.
 - `PRIVACY.md` — marketplace privacy policy
 
 ## Dev support (preset)
-- `agentic/` — agent rules for Claude Code and Continue
+- `agentic/` — agent rules for Claude Code and Continue (`rules_continue.md` updated to reflect terminal-only file edits)
+- `.continue/rules/` — Continue-loaded rules: `session-prompt.md`, `preferterminalforconfig.md`, `nomarkdownintools.md`, `surgical-python-edits.md`, `project-quickref.md`
 - `docs/dev/` — session state, open points, plans, setup, howtos
 - `scripts/` — session_start.sh, session_end.sh, bootstrap.sh
 - `Makefile` — self-contained targets: `make dev` creates `.venv` + installs deps + downloads dify-plugin CLI; `make pack` builds `.difypkg`
