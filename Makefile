@@ -75,10 +75,13 @@ clean: cleanup ## Remove build artifacts + temp files
 
 # ── Session ───────────────────────────────────────────────────────────────────
 
-session-merge: ## Squash-merge current session branch into main, then push
+session-merge: ## Squash-merge session branch into main and commit
+	@test -z "$$(git status --porcelain)" || \
+	  (echo "✗ Uncommitted changes — run 'git commit' on the session branch first."; exit 1)
 	@BRANCH=$$(git rev-parse --abbrev-ref HEAD); \
+	MSG=$$(git log --format=%s -1); \
 	echo "→ Squash-merging $$BRANCH → main..."; \
 	git checkout main && \
 	git merge --squash $$BRANCH && \
-	echo "✓ Changes staged on main." && \
-	echo "  Run: git commit -m 'session: <summary>' && git push"
+	git commit -m "$$MSG" && \
+	echo "✓ Done. Run: git push"

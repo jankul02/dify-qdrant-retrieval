@@ -1,6 +1,6 @@
 # Current Session
 
-**Status:** Closed
+**Status:** Closed (session_end flow fix)
 
 <!-- This file is overwritten at each !start. -->
 

@@ -14,6 +14,16 @@
 
 ---
 
+## 2026-05-30 — session-end flow fix
+
+| Field | Value |
+|-------|-------|
+| Branch | main (direct) |
+| Goal | Fix !end flow so all changes are committed, not just docs |
+| Outcome | Done — `session_end.sh` uses `git add -u`; `make session-merge` auto-commits on main with session branch message; no duplicate commit needed |
+
+---
+
 ## 2026-05-30 — make-pack + multi-collection
 
 | Field | Value |
