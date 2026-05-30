@@ -18,9 +18,9 @@ Agent summarizes, updates docs, commits.
 
 ## Start a session (Continue)
 
-Context is loaded automatically via `.continue/config.yaml`.  
-Type `!start [goal]` in chat.  
-Run git ops in terminal: `sh scripts/session_start.sh YYYY-MM-DD-slug`
+1. In VS Code → Continue, select **"Dify Qdrant Retrieval Plugin"** in the profile selector (above the chat box) — this loads `.continue/agents/project.yaml`.
+2. Type `!start [goal]` in chat.
+3. Run git ops in terminal: `sh scripts/session_start.sh YYYY-MM-DD-slug`
 
 ## Create a new session branch manually
 

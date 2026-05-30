@@ -1,0 +1,105 @@
+# ============================================================================
+# project.yaml — Project-specific Continue configuration reference
+# ============================================================================
+#
+# HOW TO ACTIVATE:
+#   In VS Code → Continue, select "Dify Qdrant Retrieval Plugin" as the
+#   active configuration profile (above the chat input box).
+#
+# ============================================================================
+
+name: "Dify Qdrant Retrieval Plugin"
+version: 1.0.0
+schema: v1
+
+context:
+  - provider: codebase
+  - provider: repo-map
+    params:
+      includeSignatures: false
+  - provider: diff
+  - provider: problems
+  - provider: clipboard
+
+rules:
+  - Always follow the session protocol in .continue/rules/session-prompt.md before starting any work.
+  - Always use read_file or @filename before answering about specific files. Never guess file contents.
+  - repo-map contains only signatures, not implementations. Use @file for actual code.
+  - "FILE EDITING: (1) read the file with readFile first. (2) NEVER use edit_existing_file or create_new_file — they cause corruption. ALWAYS use run_terminal_command with 'cat << EOF > filepath' to write files. (3) if a file is corrupted, run 'git checkout HEAD -- <file>' to restore it."
+
+models:
+
+  - name: "olQwen3.6-Coder 27B (MXFP8)"
+    provider: ollama
+    model: "qwen3.6:27b-coding-mxfp8"
+    roles:
+      - chat
+      - edit
+      - apply
+    capabilities:
+      - tool_use
+      - image_input
+      - vision
+    defaultCompletionOptions:
+      contextLength: 160000
+      maxTokens: 32768
+      keepAlive: 3600
+      temperature: 0.1
+      topP: 0.95
+
+  - name: olqwen2.5-coder
+    provider: ollama
+    model: "qwen2.5-coder:7b"
+    roles:
+      - edit
+      - apply
+    capabilities:
+      - tool_use
+    defaultCompletionOptions:
+      contextLength: 65536
+      maxTokens: 16384
+      keepAlive: 3600
+    promptTemplates:
+      apply: json
+      edit: json
+
+  - name: Embeddings
+    provider: ollama
+    model: "nomic-embed-text:latest"
+    roles:
+      - embed
+
+  - name: Reranker
+    provider: ollama
+    model: "nomic-embed-text:latest"
+    roles:
+      - rerank
+
+  - name: bge-reranker
+    provider: ollama
+    model: "qllama/bge-reranker-v2-m3:latest"
+    roles:
+      - rerank
+
+  - name: "Fast-Apply-1.5B-v1.0"
+    provider: ollama
+    model: "hf.co/dat-lequoc/Fast-Apply-1.5B-v1.0_GGUF:latest"
+    roles:
+      - apply
+
+  - name: instinct
+    provider: ollama
+    model: "nate/instinct"
+    roles:
+      - autocomplete
+
+docs:
+  - name: Python Docs
+    startUrl: https://docs.python.org/3/
+    rootUrl: https://docs.python.org/
+  - name: Dify Docs
+    startUrl: https://docs.dify.ai/
+    rootUrl: https://docs.dify.ai/
+  - name: Continue Docs
+    startUrl: https://docs.continue.dev/
+    rootUrl: https://docs.continue.dev/

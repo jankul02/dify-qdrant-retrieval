@@ -20,8 +20,10 @@ Spatial index: functional area → files. Update at every `!end`.
 - `PRIVACY.md` — marketplace privacy policy
 
 ## Dev support (preset)
-- `agentic/` — agent rules for Claude Code and Continue (`rules_continue.md` updated to reflect terminal-only file edits)
-- `.continue/rules/` — Continue-loaded rules: `session-prompt.md`, `preferterminalforconfig.md`, `nomarkdownintools.md`, `surgical-python-edits.md`, `project-quickref.md`
+- `agentic/` — agent rules for Claude Code and Continue; ABW (Always Be Working) mode enabled inside sessions
+- `.continue/agents/project.yaml` — named Continue profile ("Dify Qdrant Retrieval Plugin"); activate in VS Code → Continue profile selector
+- `.continue/rules/` — Continue-loaded rules: `session-prompt.md` (ABW + auto-commit), `preferterminalforconfig.md`, `nomarkdownintools.md`, `surgical-python-edits.md`, `project-quickref.md`
+- `.continue/config.yaml` — documentation/legacy reference only (not loaded by Continue)
 - `docs/dev/` — session state, open points, plans, setup, howtos
 - `scripts/` — session_start.sh, session_end.sh, bootstrap.sh
 - `Makefile` — self-contained targets: `make dev` creates `.venv` + installs deps + downloads dify-plugin CLI; `make pack` builds `.difypkg`

@@ -35,16 +35,31 @@ Ask:
 
 Write goal + start time to `docs/dev/sessions/current.md`.
 
+## In-Session Freedom (ABW — Always Be Working)
+
+Once `!start` is complete and the session is open:
+
+- **No further confirmations needed** for file edits, terminal commands, or script execution within the repo.
+- **Full repo access**: read, edit, grep, diff, create, delete files and folders freely.
+- **Tool policies**: set all tools to **Automatic** for the duration of the session.
+
+### Hard Safety Exceptions (always ask, never auto)
+
+- `git push --force` / `git push --force-with-lease`
+- Dropping Qdrant collections (`DELETE /collections/...`)
+- `rm -rf` on paths **outside** the repo root
+- Committing secrets (`.env`, tokens, credentials, keys)
+
 ## State Sync (!end)
 
-1. Summarize changes. Confirm with developer.
+1. Summarize changes (one line).
 2. Update `docs/dev/sessions/current.md` (outcome).
 3. Append entry to `docs/dev/sessions/history.md`.
 4. Update `PROJECT_MAP.md` if files were added or renamed.
 5. Update `docs/dev/open_points.md` and `docs/dev/plans.md`.
 6. Run `sh scripts/session_end.sh`.
-7. Compose a commit message and present exact commands:
-   ```
+7. **Auto-commit and auto-push** (no confirmation needed on session branches):
+   ```bash
    git commit -m 'session: <summary>'
    make session-merge
    git push

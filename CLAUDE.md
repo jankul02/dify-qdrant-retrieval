@@ -27,29 +27,45 @@ When developer types `!start [goal]`:
 4. If new branch: `sh scripts/session_start.sh <YYYY-MM-DD-slug>`
 5. Write goal + start time to `docs/dev/sessions/current.md`.
 
+### In-Session Freedom (ABW — Always Be Working)
+
+Once `!start` is complete and the session is open:
+
+- **No further confirmations needed** for file edits, terminal commands, or script execution within the repo.
+- **Full repo access**: read, edit, grep, diff, create, delete files and folders freely.
+- **Tool policies**: set all tools to **Automatic** for the duration of the session.
+
+#### Hard Safety Exceptions (always ask, never auto)
+
+- `git push --force` / `git push --force-with-lease`
+- Dropping Qdrant collections (`DELETE /collections/...`)
+- `rm -rf` on paths **outside** the repo root
+- Committing secrets (`.env`, tokens, credentials, keys)
+
 ### !end
 
 When developer types `!end`:
 
-1. Summarize changes. Confirm with developer.
+1. Summarize changes (one line).
 2. Update `docs/dev/sessions/current.md` (outcome).
 3. Append to `docs/dev/sessions/history.md`.
 4. Update `PROJECT_MAP.md` if files were added or renamed.
 5. Update `docs/dev/open_points.md` and `docs/dev/plans.md` as needed.
 6. Run `sh scripts/session_end.sh` (stages all changes — no interactive prompts).
-7. Compose a commit message from the session summary and present the exact commands to run:
+7. **Auto-commit and auto-push** (no confirmation needed on session branches):
    ```
    git commit -m 'session: <agent-composed summary>'
    make session-merge
    git push
    ```
-   `make session-merge` squash-merges to main and auto-commits with the same message — one commit on main, no duplicate. Developer pastes, reviews, and runs — no writing required.
+   `make session-merge` squash-merges to main and auto-commits with the same message — one commit on main, no duplicate.
 
 ---
 
 ## Rules
 
-- **Always ask before:** `git commit`, `git push`, running any `sh scripts/*`, deleting files, force push.
-- **File edits:** state what file you are about to change and why — the tool permission prompt is the confirmation, do not ask twice.
+- **Session gate:** `!start [goal]` required before any work. Read-only questions may proceed without a session.
+- **In-session:** ABW mode — no confirmations, full repo access, tools set to Automatic.
+- **Hard Safety Exceptions:** always ask (force push, drop collections, rm -rf outside repo, committing secrets).
 - Keep files short — split when >150 lines.
 - No features beyond the session goal.

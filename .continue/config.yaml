@@ -1,8 +1,9 @@
-# NOTE: Continue does NOT load project-level config.yaml.
-# Only ~/.continue/config.yaml is loaded (global).
-# Model settings and inline rules here are IGNORED.
+# NOTE: Continue does NOT load this file.
+# The active project configuration is in .continue/agents/project.yaml
+# (activate via VS Code → Continue profile selector above the chat box).
+# Only ~/.continue/config.yaml is loaded globally.
 # Use .continue/rules/*.md for project-specific rules — those ARE loaded.
-# This file is kept as documentation/reference only.
+# This file is kept as documentation/legacy reference only.
 
 # Continue config for Dify Qdrant Retrieval Plugin
 version: "1"
