@@ -14,6 +14,16 @@
 
 ---
 
+## 2026-05-30 — make-pack + multi-collection
+
+| Field | Value |
+|-------|-------|
+| Branch | main (direct — continuation after session-merge) |
+| Goal | Capture missed code changes + multi-collection support |
+| Outcome | Done — `knowledge_id` from Dify EKB protocol used as dynamic collection override (fallback to plugin setting); architecture reviewed: embedding stays in plugin for coherence, Tool endpoint for upsert would take collection as explicit parameter; junk filter confirmed removed (pure interface decision) |
+
+---
+
 ## 2026-05-30 — make-pack
 
 | Field | Value |

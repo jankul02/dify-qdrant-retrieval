@@ -1,27 +1,12 @@
 import json
+import logging
 from typing import Mapping
 
 import httpx
 from dify_plugin import Endpoint
 from werkzeug import Request, Response
 
-MIN_CONTENT_LEN = 100
-_BLANK_MARKERS = ("the image is blank", "no diagrams, charts, or visual schemas", "no content was provided",
-                  "no visible content to extract", "image or page content was not provided",
-                  "please upload the page")
-
-
-def _is_junk(content: str) -> bool:
-    if len(content) < MIN_CONTENT_LEN:
-        return True
-    if any(m in content.lower() for m in _BLANK_MARKERS):
-        return True
-    words = content.split()
-    if len(words) >= 5:
-        top_count = max(words.count(w) for w in set(words))
-        if top_count / len(words) > 0.4:
-            return True
-    return False
+logger = logging.getLogger(__name__)
 
 
 def embed(text: str, ollama_url: str, embed_model: str) -> list[float]:
@@ -68,14 +53,14 @@ class QdrantRetrievalEndpoint(Endpoint):
                 content_type="application/json",
             )
 
-        query = body.get("query", "").strip()
+        query = next((v for k, v in body.items() if k.lower() == "query"), "").strip()
         retrieval_setting = body.get("retrieval_setting", {})
         top_k = int(retrieval_setting.get("top_k", 5))
         score_threshold = float(retrieval_setting.get("score_threshold", 0.3))
 
         qdrant_url = settings.get("qdrant_url", "").rstrip("/")
         qdrant_api_key = settings.get("qdrant_api_key", "")
-        collection = settings.get("collection", "")
+        collection = body.get("knowledge_id") or settings.get("collection", "")
         ollama_url = settings.get("ollama_url", "").rstrip("/")
         embed_model = settings.get("embed_model", "")
 
@@ -86,8 +71,9 @@ class QdrantRetrievalEndpoint(Endpoint):
 
         try:
             vector = embed(query, ollama_url, embed_model)
-            hits = search(vector, max(top_k * 10, 50), score_threshold, qdrant_url, qdrant_api_key, collection)
+            hits = search(vector, top_k, score_threshold, qdrant_url, qdrant_api_key, collection)
         except Exception as e:
+            logger.error("embed/search failed: %s", e)
             return Response(
                 json.dumps({"error": str(e)}),
                 status=500,
@@ -98,10 +84,6 @@ class QdrantRetrievalEndpoint(Endpoint):
         for hit in hits:
             payload = hit.get("payload", {})
             content = payload.get("content", "")
-            if _is_junk(content):
-                continue
-            if len(records) >= top_k:
-                break
 
             space_key = payload.get("space_key", "")
             confluence_page_id = payload.get("confluence_page_id", "")

@@ -6,7 +6,7 @@
 
 | Field | Value |
 |-------|-------|
-| Branch | session/2026-05-30-make-pack |
-| Goal | Get `make pack` working (build a distributable Dify plugin package) |
+| Branch | main (direct) |
+| Goal | Continuation: multi-collection support + architecture review |
 | Started | 2026-05-30 |
 | Outcome | Done — see history.md |

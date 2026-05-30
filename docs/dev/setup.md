@@ -19,8 +19,7 @@ sh scripts/bootstrap.sh   # ensures make is installed
 cp .env.example .env
 # fill in REMOTE_INSTALL_KEY from your Dify instance debug settings
 
-uv venv && source .venv/bin/activate
-make dev   # installs requirements.txt + ruff
+make dev   # creates .venv and installs all deps (requirements.txt + ruff + dify-plugin)
 ```
 
 ## Common targets

@@ -8,35 +8,46 @@ help: ## Show available targets
 
 # ── Development ───────────────────────────────────────────────────────────────
 
-dev: ## Install dependencies (venv must be active)
-	@echo "→ Installing dependencies..."
-	pip install -r requirements.txt
-	pip install ruff
+DIFY_PLUGIN_VERSION := 0.0.6
+DIFY_PLUGIN_OS     := $(shell uname -s | tr '[:upper:]' '[:lower:]')
+DIFY_PLUGIN_ARCH   := $(shell uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/')
+DIFY_PLUGIN_BIN    := .venv/bin/dify-plugin
+DIFY_PLUGIN_URL    := https://github.com/langgenius/dify-plugin-daemon/releases/download/$(DIFY_PLUGIN_VERSION)/dify-plugin-$(DIFY_PLUGIN_OS)-$(DIFY_PLUGIN_ARCH)
+
+dev: ## Create .venv (if needed), install deps, and fetch dify-plugin CLI
+	@echo "→ Setting up environment..."
+	@test -d .venv || uv venv
+	uv pip install --python .venv/bin/python -r requirements.txt ruff dify-plugin
+	@test -x $(DIFY_PLUGIN_BIN) || \
+	  (echo "→ Downloading dify-plugin CLI $(DIFY_PLUGIN_VERSION) ($(DIFY_PLUGIN_OS)-$(DIFY_PLUGIN_ARCH))..." && \
+	   curl -sL $(DIFY_PLUGIN_URL) -o $(DIFY_PLUGIN_BIN) && chmod +x $(DIFY_PLUGIN_BIN))
 	@echo "✓ Done. Run 'make run' to start in debug mode."
 
 run: ## Run plugin in debug mode (requires .env with REMOTE_INSTALL_KEY)
 	@echo "→ Starting plugin (debug mode)..."
-	python -m main
+	.venv/bin/python -m main
 
 # ── Packaging ─────────────────────────────────────────────────────────────────
 
-pack: ## Package plugin into .difypkg (requires dify-plugin CLI)
-	@command -v dify-plugin >/dev/null 2>&1 || \
-	  (echo "✗ dify-plugin CLI not found. Install: pip install dify-plugin"; exit 1)
+PLUGIN_NAME := $(shell grep '^name:' manifest.yaml | awk '{print $$2}')
+
+pack: ## Package plugin into .difypkg (run make dev first)
+	@test -x $(DIFY_PLUGIN_BIN) || \
+	  (echo "✗ dify-plugin not found. Run 'make dev' first."; exit 1)
 	@echo "→ Packaging plugin..."
-	dify-plugin plugin package .
-	@echo "✓ Package ready. Install via Dify → Plugins → Install from local file."
+	@cd ..; $(abspath $(DIFY_PLUGIN_BIN)) plugin package $(notdir $(CURDIR)) -o $(CURDIR)/$(PLUGIN_NAME).difypkg
+	@echo "✓ Package ready: $(PLUGIN_NAME).difypkg"
 
 # ── Quality ───────────────────────────────────────────────────────────────────
 
 lint: ## Lint with ruff
 	@echo "→ Linting..."
-	ruff check endpoints main.py
+	.venv/bin/ruff check endpoints main.py
 	@echo "✓ No issues."
 
 format: ## Format with ruff (modifies files)
 	@echo "→ Formatting..."
-	ruff format endpoints main.py
+	.venv/bin/ruff format endpoints main.py
 	@echo "✓ Formatted."
 
 check: lint ## Run all checks (use before committing)
