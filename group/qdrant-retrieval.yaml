@@ -51,3 +51,4 @@ settings:
       en_US: "MUST match the model used to index your Qdrant collection. A different model produces vectors in a different space and returns no meaningful results."
 endpoints:
   - endpoints/qdrant-retrieval.yaml
+  - endpoints/qdrant-upsert.yaml

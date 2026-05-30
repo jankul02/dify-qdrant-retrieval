@@ -1,0 +1,5 @@
+path: /upsert
+method: POST
+extra:
+  python:
+    source: endpoints/qdrant-upsert.py

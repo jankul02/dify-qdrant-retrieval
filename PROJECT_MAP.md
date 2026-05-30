@@ -5,10 +5,11 @@ Spatial index: functional area → files. Update at every `!end`.
 ## Core (root)
 - `main.py` — Dify SDK entry point; registers the endpoint group
 - `endpoints/qdrant-retrieval.py` — `QdrantRetrievalEndpoint`: embed → search → format (no content filter — pure interface)
+- `endpoints/qdrant-upsert.py` — `QdrantUpsertEndpoint`: embed → upsert points into Qdrant; supports single-doc and batch payloads
 
 ## Plugin config (root)
 - `manifest.yaml` — plugin metadata, permissions, runner config (Python 3.12, amd64/arm64)
-- `group/qdrant-retrieval.yaml` — endpoint group definition + 5 settings (Qdrant, Ollama, collection, model)
+- `group/qdrant-retrieval.yaml` — endpoint group definition + 5 settings (Qdrant, Ollama, collection, model); registers both `/retrieval` and `/upsert`
 - `requirements.txt` — runtime dependencies
 - `.difyignore` — excludes dev-only files from `make pack` output
 
