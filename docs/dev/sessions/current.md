@@ -6,7 +6,7 @@
 
 | Field | Value |
 |-------|-------|
-| Branch | session/2026-05-30-plugin-versioning |
-| Goal | Plugin versioning |
+| Branch | session/2026-05-30-upsert-auto-create |
+| Goal | Auto-create Qdrant collection on upsert if it doesn't exist |
 | Started | 2026-05-30 |
-| Outcome | Done — semver workflow added: `version.py` reads `__version__` from `manifest.yaml`; `scripts/bump_version.py` bumps version, updates CHANGELOG, commits, creates and pushes git tag; `make bump-patch/minor/major` targets added; `CHANGELOG.md` created; `manifest.yaml` bumped to `0.1.0`; both endpoints return `plugin_version` in success responses; `docs/dev/howtos.md` updated with release workflow |
+| Outcome | Done — `create_collection` added to `qdrant-upsert.py`; on 404 from Qdrant, collection is created (Cosine, vector size inferred from first embedding) and upsert retried; Qdrant 4xx errors now returned as HTTP 400 instead of 500; `docs/dev/howtos.md` updated |

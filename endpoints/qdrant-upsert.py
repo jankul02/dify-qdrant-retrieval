@@ -28,6 +28,16 @@ def embed(text: str, ollama_url: str, embed_model: str) -> list[float]:
     return resp.json()["embeddings"][0]
 
 
+def create_collection(vector_size: int, qdrant_url: str, qdrant_api_key: str, collection: str) -> None:
+    resp = httpx.put(
+        f"{qdrant_url}/collections/{collection}",
+        headers={"api-key": qdrant_api_key, "Content-Type": "application/json"},
+        json={"vectors": {"size": vector_size, "distance": "Cosine"}},
+        timeout=30,
+    )
+    resp.raise_for_status()
+
+
 def upsert_points(points: list[dict], qdrant_url: str, qdrant_api_key: str, collection: str) -> None:
     resp = httpx.put(
         f"{qdrant_url}/collections/{collection}/points",
@@ -36,6 +46,16 @@ def upsert_points(points: list[dict], qdrant_url: str, qdrant_api_key: str, coll
         json={"points": points},
         timeout=60,
     )
+    if resp.status_code == 404:
+        vector_size = len(points[0]["vector"])
+        create_collection(vector_size, qdrant_url, qdrant_api_key, collection)
+        resp = httpx.put(
+            f"{qdrant_url}/collections/{collection}/points",
+            params={"wait": "true"},
+            headers={"api-key": qdrant_api_key, "Content-Type": "application/json"},
+            json={"points": points},
+            timeout=60,
+        )
     resp.raise_for_status()
 
 
@@ -109,6 +129,14 @@ class QdrantUpsertEndpoint(Endpoint):
 
         try:
             upsert_points(points, qdrant_url, qdrant_api_key, collection)
+        except httpx.HTTPStatusError as e:
+            status = e.response.status_code if e.response.status_code >= 500 else 400
+            logger.error("upsert failed: %s", e)
+            return Response(
+                json.dumps({"error": str(e)}),
+                status=status,
+                content_type="application/json",
+            )
         except Exception as e:
             logger.error("upsert failed: %s", e)
             return Response(

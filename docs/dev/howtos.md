@@ -49,6 +49,7 @@ In a Dify HTTP request node, send `POST` to the plugin's `/upsert` path.
 
 - `id` is optional; if given, the same `id` always maps to the same Qdrant point (idempotent upsert).
 - `collection` overrides the plugin setting — omit it to use the setting default.
+- If the collection does not exist it is created automatically (Cosine distance, vector size inferred from the first embedding).
 - Response: `{"upserted": 1, "ids": ["doc-abc"], "plugin_version": "0.1.0"}`
 
 ## Release a new version
