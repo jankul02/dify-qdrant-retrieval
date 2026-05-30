@@ -1,7 +1,6 @@
 # Handbook — Dify Qdrant Retrieval Plugin
 
 ## Install / Update
-
 | Method | When to use |
 |---|---|
 | **Debug mode** (local dev) | `cp .env.example .env` → `make dev && make run` — plugin registers in Dify via `REMOTE_INSTALL_KEY` |
@@ -9,6 +8,10 @@
 | **Marketplace** | Search for the plugin in Dify's marketplace (when published) |
 
 To **update**, repeat the same method with the new version in `manifest.yaml`.
+
+> 📖 See [Dify Plugin Installation docs](https://docs.dify.ai/en/develop-plugin/getting-started/plugin-installation) for the full upstream reference.
+
+
 
 ## Regular usage
 

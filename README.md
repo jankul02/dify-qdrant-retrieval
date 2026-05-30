@@ -23,6 +23,8 @@ Dify chatflow / workflow
 
 ## Quick start (debug mode)
 
+Useful during development — runs the plugin locally and registers it in Dify as a "debugging" plugin, so you can test changes without packaging.
+
 ```bash
 cp .env.example .env   # fill in REMOTE_INSTALL_KEY from Dify debug settings
 make dev

@@ -4,6 +4,16 @@
 
 ---
 
+## 2026-05-29 — continue-qwen3
+
+| Field | Value |
+|-------|-------|
+| Branch | session/2026-05-29-continue-qwen3 |
+| Goal | Improve Continue plugin tools and reading prompts for use with Qwen 3.6 |
+| Outcome | Done — project `.continue/config.yaml` rewritten (qwen3.6:35b, embed, rerank, docs, inline rules); `agentic/rules_continue.md` updated with session gate + edit tool guidance + file pointer rule; global `~/.continue/config.yaml` fixed (YAML parse error, invalid capabilities removed); `~/.continue/rules/session-prompt.md` created |
+
+---
+
 ## 2026-05-29 — dify-settings-params
 
 | Field | Value |

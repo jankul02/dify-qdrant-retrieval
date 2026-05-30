@@ -1,27 +1,63 @@
-# Continue config — https://docs.continue.dev/reference/config-yaml
-# Adjust models to match your local/cloud setup.
+# Continue config for Dify Qdrant Retrieval Plugin
+# Primary model: qwen3.6:35b via Ollama
 
 name: "Dify Qdrant Retrieval Plugin"
 
 models:
-  - name: Claude Sonnet
-    provider: anthropic
-    model: claude-sonnet-4-6
-    apiKey: $ANTHROPIC_API_KEY
-    roles: [chat, edit, apply]
+  - name: "qwen3.6:35b"
+    provider: openai
+    model: qwen3.6:35b
+    roles:
+      - chat
+      - edit
+      - apply
+    capabilities:
+      - tool_use
+    defaultCompletionOptions:
+      contextLength: 131072
+      maxTokens: 32768
+      keepAlive: 3600
+      temperature: 0.1
+      topP: 0.95
+    apiBase: "http://localhost:11434/v1"
 
-  - name: Ollama (local)
+  - name: Embeddings
     provider: ollama
-    model: AUTODETECT
-    roles: [autocomplete]
+    model: "nomic-embed-text:latest"
+    roles:
+      - embed
 
-contextProviders:
-  - name: file
-  - name: folder
-  - name: code
-  - name: currentFile
+  - name: Reranker
+    provider: ollama
+    model: "nomic-embed-text:latest"
+    roles:
+      - rerank
+
+context:
+  - provider: codebase
+  - provider: repo-map
+    params:
+      includeSignatures: false
+  - provider: diff
+  - provider: file
+  - provider: folder
+  - provider: code
+  - provider: currentFile
+
+docs:
+  - name: Python Docs
+    startUrl: https://docs.python.org/3/
+    rootUrl: https://docs.python.org/
+  - name: Dify Docs
+    startUrl: https://docs.dify.ai/
+    rootUrl: https://docs.dify.ai/
+  - name: Continue Docs
+    startUrl: https://docs.continue.dev/
+    rootUrl: https://docs.continue.dev/
 
 rules:
-  - file: agentic/rules_common.md
-  - file: agentic/rules_project.md
-  - file: agentic/rules_continue.md
+  - "SESSION GATE: For any file edits, commits, or scripts, ask the user to type !start [goal] first. Read-only questions may proceed without a session."
+  - "SESSION START: When !start is given, read agentic/rules_common.md, agentic/rules_project.md, agentic/rules_continue.md, PROJECT_MAP.md, docs/dev/sessions/current.md. Then run git status and git log --oneline -5."
+  - "FILE EDITING: (1) read the file with readFile first. (2) use editExistingFile with old_string/new_string format. (3) if the file is corrupted after an edit, run 'git checkout HEAD -- <file>' immediately to restore it, then retry with writeFile using the complete new content."
+  - "FILE TARGET: If a file you read says 'the correct place for X is file Y', edit file Y — not the file that contained the pointer."
+  - "SAFETY: Always ask before git commit, git push, sh scripts/*, or deleting files."
