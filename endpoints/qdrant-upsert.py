@@ -7,6 +7,8 @@ import httpx
 from dify_plugin import Endpoint
 from werkzeug import Request, Response
 
+from version import __version__
+
 logger = logging.getLogger(__name__)
 
 _NS = uuid.UUID("6ba7b810-9dad-11d1-80b4-00c04fd430c8")
@@ -116,7 +118,7 @@ class QdrantUpsertEndpoint(Endpoint):
             )
 
         return Response(
-            json.dumps({"upserted": len(points), "ids": returned_ids}),
+            json.dumps({"upserted": len(points), "ids": returned_ids, "plugin_version": __version__}),
             status=200,
             content_type="application/json",
         )

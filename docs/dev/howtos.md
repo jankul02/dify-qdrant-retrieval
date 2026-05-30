@@ -49,7 +49,27 @@ In a Dify HTTP request node, send `POST` to the plugin's `/upsert` path.
 
 - `id` is optional; if given, the same `id` always maps to the same Qdrant point (idempotent upsert).
 - `collection` overrides the plugin setting — omit it to use the setting default.
-- Response: `{"upserted": 1, "ids": ["doc-abc"]}`
+- Response: `{"upserted": 1, "ids": ["doc-abc"], "plugin_version": "0.1.0"}`
+
+## Release a new version
+
+1. During a session, pick a bump type and run:
+
+   ```bash
+   make bump-patch   # 0.1.0 → 0.1.1  (bug fixes)
+   make bump-minor   # 0.1.0 → 0.2.0  (new features, backwards-compatible)
+   make bump-major   # 0.1.0 → 1.0.0  (breaking changes)
+   ```
+
+   This will:
+   - Update both `version:` fields in `manifest.yaml`
+   - Promote `[Unreleased]` → `[X.Y.Z] - YYYY-MM-DD` in `CHANGELOG.md`
+   - Git-commit the two files
+   - Create and push the `vX.Y.Z` tag to origin
+
+2. Before bumping, add release notes under `## [Unreleased]` in `CHANGELOG.md`.
+
+3. Run `!end` as normal — the session merges to main and pushes the code. The tag is already on origin.
 
 ## Create a new session branch manually
 

@@ -6,7 +6,7 @@
 
 | Field | Value |
 |-------|-------|
-| Branch | session/2026-05-30-qdrant-upsert |
-| Goal | Design, plan and add an upsert interface to be easily used in Dify |
+| Branch | session/2026-05-30-plugin-versioning |
+| Goal | Plugin versioning |
 | Started | 2026-05-30 |
-| Outcome | Done — `POST /upsert` endpoint added (`endpoints/qdrant-upsert.py` + `endpoints/qdrant-upsert.yaml`); registered in `group/qdrant-retrieval.yaml`; supports single-doc and batch payloads, deterministic UUID5 for idempotent upsert when `id` provided, `collection` body field overrides settings; usage examples added to `docs/dev/howtos.md`; `PROJECT_MAP.md` updated |
+| Outcome | Done — semver workflow added: `version.py` reads `__version__` from `manifest.yaml`; `scripts/bump_version.py` bumps version, updates CHANGELOG, commits, creates and pushes git tag; `make bump-patch/minor/major` targets added; `CHANGELOG.md` created; `manifest.yaml` bumped to `0.1.0`; both endpoints return `plugin_version` in success responses; `docs/dev/howtos.md` updated with release workflow |

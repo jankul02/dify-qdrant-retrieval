@@ -6,6 +6,8 @@ import httpx
 from dify_plugin import Endpoint
 from werkzeug import Request, Response
 
+from version import __version__
+
 logger = logging.getLogger(__name__)
 
 
@@ -138,7 +140,7 @@ class QdrantRetrievalEndpoint(Endpoint):
             )
 
         return Response(
-            json.dumps({"records": records}),
+            json.dumps({"records": records, "plugin_version": __version__}),
             status=200,
             content_type="application/json",
         )

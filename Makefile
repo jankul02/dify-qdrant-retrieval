@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 
-.PHONY: help dev run pack lint format check map cleanup clean session-merge
+.PHONY: help dev run pack lint format check map cleanup clean session-merge bump-patch bump-minor bump-major
 
 help: ## Show available targets
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
@@ -72,6 +72,19 @@ cleanup: ## Remove temp files and caches
 clean: cleanup ## Remove build artifacts + temp files
 	rm -rf dist/ build/
 	@echo "✓ Clean."
+
+# ── Session ───────────────────────────────────────────────────────────────────
+
+# ── Versioning ────────────────────────────────────────────────────────────────
+
+bump-patch: ## Bump patch version (x.y.Z+1), update CHANGELOG, commit
+	python3 scripts/bump_version.py patch
+
+bump-minor: ## Bump minor version (x.Y+1.0), update CHANGELOG, commit
+	python3 scripts/bump_version.py minor
+
+bump-major: ## Bump major version (X+1.0.0), update CHANGELOG, commit
+	python3 scripts/bump_version.py major
 
 # ── Session ───────────────────────────────────────────────────────────────────
 
