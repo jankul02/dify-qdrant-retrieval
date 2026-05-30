@@ -14,6 +14,16 @@
 
 ---
 
+## 2026-05-30 — make-pack
+
+| Field | Value |
+|-------|-------|
+| Branch | session/2026-05-30-make-pack |
+| Goal | Get `make pack` working |
+| Outcome | Done — Makefile made self-contained (uv venv, uv pip, auto-downloads dify-plugin CLI binary); `.difyignore` updated to exclude dev files; HANDBOOK.md got "How to use in Dify" section; endpoint junk filter removed (plugin is now a pure interface); case-insensitive query extraction added; embed_model default changed to nomic-embed-text:latest; helper text added to all plugin settings; HLD.md updated |
+
+---
+
 ## 2026-05-29 — dify-settings-params
 
 | Field | Value |
