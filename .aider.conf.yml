@@ -1,0 +1,56 @@
+# ============================================================================
+# .aider.conf.yml — Aider config for devcontainer (offline via Ollama)
+# ============================================================================
+#
+# USE ONLY INSIDE THE DEVCONTAINER.
+# host.docker.internal resolves only from inside Docker, not from the host.
+#
+# OLLAMA_API_BASE is set in devcontainer.json → http://host.docker.internal:11434
+# Models mirror .continue/agents/sandbox.yaml — run `ollama list` on the host
+# to verify they are pulled.
+#
+# HOW TO USE:
+#   1. Cmd+Shift+P → "Dev Containers: Reopen in Container"
+#   2. Open a terminal inside the container
+#   3. aider <file>                        — edit a specific file
+#      aider                               — let aider pick relevant files
+#      aider --model ollama/<model> <file> — override model for this run
+#
+# NOTE: auto-commits is off — git flow goes through the session workflow (!end).
+# ============================================================================
+
+# Files loaded read-only at startup — mirrors what Claude Code and Continue load.
+read:
+  - .continue/rules/session-prompt.md
+  - agentic/rules_common.md
+  - agentic/rules_project.md
+  - agentic/rules_aider.md
+  - PROJECT_MAP.md
+  - docs/dev/sessions/current.md
+
+# Architect mode: big model reasons about what to change, small model applies the diffs.
+architect: true
+
+# Main model — thinks about WHAT to change (matches "olQwen3.6-Coder 27B" in sandbox.yaml)
+model: ollama/qwen3.6:27b-coding-mxfp8
+
+# Editor model — applies the actual diffs (fast, matches olqwen2.5-coder in sandbox.yaml)
+editor-model: ollama/qwen2.5-coder:7b
+
+# Weak model — commit messages and trivial formatting
+weak-model: ollama/qwen2.5-coder:7b
+
+# Let the session workflow (!end) handle all commits.
+auto-commits: false
+
+# Cap generation to prevent runaway/looping responses from Ollama models.
+max-tokens: 8192
+
+# Only refresh the repo map when files change, not on every message.
+map-refresh: auto
+
+# Show diffs before applying so you can catch issues early.
+pretty: true
+
+# Color theme — switch to light-mode: true if on a light terminal background.
+dark-mode: true
