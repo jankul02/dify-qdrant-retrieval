@@ -18,15 +18,15 @@
      "--add-host=host.docker.internal:host-gateway"
    ],
    "remoteEnv": {
-     "OLLAMA_HOST": "http://host.docker.internal:11434"
+     "OLLAMA_HOST": "http://host.docker.internal:11434",
+     "OLLAMA_API_BASE": "http://host.docker.internal:11434"
    },
    "remoteUser": "vscode",
    "customizations": {
      "vscode": {
        "extensions": [
          "ms-python.python",
-         "ms-python.vscode-pylance",
-         "Continue.continue"
+         "ms-python.vscode-pylance"
        ]
      }
    },
