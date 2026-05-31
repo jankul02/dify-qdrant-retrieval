@@ -6,7 +6,7 @@
 
 | Field | Value |
 |-------|-------|
-| Branch | session/2026-05-30-upsert-auto-create |
-| Goal | Auto-create Qdrant collection on upsert if it doesn't exist |
-| Started | 2026-05-30 |
-| Outcome | Done — `create_collection` added to `qdrant-upsert.py`; on 404 from Qdrant, collection is created (Cosine, vector size inferred from first embedding) and upsert retried; Qdrant 4xx errors now returned as HTTP 400 instead of 500; `docs/dev/howtos.md` updated |
+| Branch | main |
+| Goal | Fix External Knowledge connection + document Dify settings |
+| Started | 2026-05-31 |
+| Outcome | Done — `pdf_url` field added to retrieval metadata; `page_num` fallback improved (page_start → page_num → 1); Dify External Knowledge connection debugged: `knowledge_id` used as collection name, API Endpoint must be `http://nginx/e/<id>` (no `/retrieval` suffix), howtos.md updated |

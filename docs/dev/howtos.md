@@ -22,6 +22,39 @@ Agent summarizes, updates docs, commits.
 2. Type `!start [goal]` in chat.
 3. Run git ops in terminal: `sh scripts/session_start.sh YYYY-MM-DD-slug`
 
+## Configure Dify External Knowledge Base
+
+### Plugin endpoint settings (e.g. `brpserarch`)
+
+| Setting | Example value |
+|---------|--------------|
+| Qdrant URL | `http://host.docker.internal:6334` |
+| Qdrant API Key | your key (default dev: `difyai123456`) |
+| Collection Name | `pdf_pages_vision` (fallback when `knowledge_id` not set) |
+| Ollama URL | `http://host.docker.internal:11434` |
+| Embedding Model | `nomic-embed-text:latest` |
+
+### External Knowledge API settings
+
+| Field | Correct value | Common mistake |
+|-------|---------------|----------------|
+| API Endpoint | `http://nginx/e/<endpoint-id>` | ~~`http://localhost/...`~~ — fails inside Docker |
+| API Endpoint | no `/retrieval` suffix | ~~`.../retrieval`~~ — Dify appends it; `/retrieval/retrieval` → 404 |
+
+Example: `http://nginx/e/d3eamsl50cedociv`
+
+### External Knowledge (knowledge base) settings
+
+| Field | Correct value |
+|-------|---------------|
+| External Knowledge ID | Qdrant collection name, e.g. `pdf_pages_vision` |
+| Top K | 4 |
+| Score Threshold | disabled → plugin default `0.3` applies |
+
+> **Why `localhost` fails:** Dify's API container calls the External Knowledge API from inside Docker. `localhost` = the container itself (nothing listening on port 80 → connection refused → "Reached maximum retries (3)"). Use the `nginx` service name instead.
+
+---
+
 ## Call the upsert endpoint from a Dify workflow
 
 In a Dify HTTP request node, send `POST` to the plugin's `/upsert` path.

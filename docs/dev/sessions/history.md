@@ -84,6 +84,16 @@
 
 ---
 
+## 2026-05-31 — fix-external-knowledge-connection
+
+| Field | Value |
+|-------|-------|
+| Branch | main (direct) |
+| Goal | Fix External Knowledge connection + document Dify settings |
+| Outcome | Done — `pdf_url` field added to retrieval metadata; `page_num` fallback improved (page_start → page_num → 1); Dify connection root causes found: (1) `knowledge_id` sent by Dify is used as Qdrant collection name — must equal collection name in Dify EKB settings; (2) API Endpoint URL must use `http://nginx/e/<id>` not `http://localhost/...` (Docker localhost ≠ nginx); (3) no `/retrieval` suffix in API Endpoint — Dify appends it automatically; howtos.md updated with full Dify EKB configuration reference |
+
+---
+
 ## 2026-05-30 — plugin-versioning
 
 | Field | Value |

@@ -116,7 +116,8 @@ class QdrantRetrievalEndpoint(Endpoint):
                 {
                     "metadata": {
                         "path": source_path,
-                        "page_num": payload.get("page_num", 0),
+                        "pdf_url": payload.get("pdf_url", ""),
+                        "page_num": payload.get("page_start", payload.get("page_num", 1)),
                         "doc_id": payload.get("doc_id", ""),
                         "chunk_type": payload.get("chunk_type", "text"),
                         "tenant": payload.get("tenant", ""),
