@@ -7,7 +7,7 @@
 | Field | Value |
 |-------|-------|
 | Branch | session/2026-05-31-devcontainer-sandbox |
-| Goal | Set up devcontainer sandbox for isolated development; document ANTHROPIC_API_KEY export |
+| Goal | Set up devcontainer sandbox for isolated development; use Claude Code CLI login instead of API key passthrough |
 | Started | 2026-05-31 |
 | Outcome | |
 
@@ -19,29 +19,32 @@ bash ~/projects/dev-sandbox/scripts/install.sh python-agent ~/projects/dify-qdra
 ```
 
 This created:
-- `.devcontainer/devcontainer.json` — container config with Ollama bridge, ANTHROPIC_API_KEY passthrough, security hardening
+- `.devcontainer/devcontainer.json` — container config with Ollama bridge, security hardening (no API key passthrough)
 - `.devcontainer/Dockerfile` — Python 3.12-slim + Node.js 22 + Claude Code CLI
 - `.continue/agents/sandbox.yaml` — Continue profile "(sandbox)" routing Ollama through `host.docker.internal:11434`
 
-## ANTHROPIC_API_KEY
+## Claude Code CLI Authentication
 
-**Current status:** NOT SET in host shell (`~/.zshrc`, `~/.bashrc`, etc. have no export).
+No `ANTHROPIC_API_KEY` is forwarded from the host. Instead, authenticate inside the container:
 
-**How the devcontainer handles it:** `devcontainer.json` has `"ANTHROPIC_API_KEY": "${localEnv:ANTHROPIC_API_KEY}"` in `remoteEnv`, which forwards the host env var into the container at startup. If the host var is unset, the container var will also be unset.
+1. Reopen in devcontainer (`Cmd+Shift+P → Dev Containers: Reopen in Container`)
+2. Open a terminal inside the container
+3. Run `claude login` — follows OAuth flow (browser or code-based)
+4. Credentials stored in `~/.claude/` inside the container
 
-**To make it persistent on the host**, add to `~/.zshrc` (or `~/.bashrc`):
-```bash
-export ANTHROPIC_API_KEY="sk-ant-..."
-```
-Then `source ~/.zshrc` or restart the terminal.
+## Continue Agents
 
-**Alternative (container-only):** Set it in `devcontainer.json` `remoteEnv` directly as a literal string, but this risks committing secrets if the file is tracked. **Not recommended** — use the host env var approach.
+Two profiles available:
+- **`project.yaml`** — "Dify Qdrant Retrieval Plugin" — Ollama on `localhost:11434` (host use)
+- **`sandbox.yaml`** — "Dify Qdrant Retrieval Plugin (sandbox)" — Ollama on `host.docker.internal:11434` (container use)
+
+Both are pure Ollama — no Anthropic models configured.
 
 ## Activation Steps
 
 1. `git add .devcontainer/ .continue/agents/sandbox.yaml && git commit -m 'add devcontainer sandbox'`
 2. Open `dify-qdrant-retrieval` in VS Code
 3. `Cmd+Shift+P` → `Dev Containers: Reopen in Container`
-4. Ensure `ANTHROPIC_API_KEY` is exported in your host shell (see above)
+4. In container terminal: `claude login`
 5. In Continue panel, switch to profile ending with `(sandbox)`
 6. On Linux: verify `--add-host=host.docker.internal:host-gateway` in `devcontainer.json` runArgs (already present)

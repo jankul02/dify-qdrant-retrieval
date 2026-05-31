@@ -1,36 +1,35 @@
 {
-  "name": "python-agent",
-  "build": {
-    "dockerfile": "Dockerfile",
-    "context": ".."
-  },
-  "workspaceFolder": "/workspace",
-  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
-  "mounts": [
-    // Mount Ollama logs read-only for observability without Docker socket access.
-    // Remove this line if ~/.ollama/logs does not exist on your host.
-    "source=${localEnv:HOME}/.ollama/logs,target=/host-logs/ollama,type=bind,readonly=true"
-  ],
-  "runArgs": [
-    "--cap-drop=ALL",
-    "--security-opt=no-new-privileges",
-    // Required on Linux; harmless on macOS Docker Desktop (host.docker.internal already set).
-    "--add-host=host.docker.internal:host-gateway"
-  ],
-  "remoteEnv": {
-    "OLLAMA_HOST": "http://host.docker.internal:11434",
-    "ANTHROPIC_API_KEY": "${localEnv:ANTHROPIC_API_KEY}"
-  },
-  "remoteUser": "vscode",
-  "customizations": {
-    "vscode": {
-      "extensions": [
-        "ms-python.python",
-        "ms-python.vscode-pylance",
-        "Continue.continue"
-      ]
-    }
-  },
-  // Installs project deps at container start; silently skips if no requirements.txt.
-  "postCreateCommand": "pip install --user -r requirements.txt 2>/dev/null || true"
+   "name": "python-agent",
+   "build": {
+     "dockerfile": "Dockerfile",
+     "context": ".."
+   },
+   "workspaceFolder": "/workspace",
+   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+   "mounts": [
+     // Mount Ollama logs read-only for observability without Docker socket access.
+     // Remove this line if ~/.ollama/logs does not exist on your host.
+     "source=${localEnv:HOME}/.ollama/logs,target=/host-logs/ollama,type=bind,readonly=true"
+   ],
+   "runArgs": [
+     "--cap-drop=ALL",
+     "--security-opt=no-new-privileges",
+     // Required on Linux; harmless on macOS Docker Desktop (host.docker.internal already set).
+     "--add-host=host.docker.internal:host-gateway"
+   ],
+   "remoteEnv": {
+     "OLLAMA_HOST": "http://host.docker.internal:11434"
+   },
+   "remoteUser": "vscode",
+   "customizations": {
+     "vscode": {
+       "extensions": [
+         "ms-python.python",
+         "ms-python.vscode-pylance",
+         "Continue.continue"
+       ]
+     }
+   },
+   // Installs project deps at container start; silently skips if no requirements.txt.
+   "postCreateCommand": "pip install --user -r requirements.txt 2>/dev/null || true"
 }
