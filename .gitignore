@@ -177,3 +177,12 @@ cython_debug/
 
 # Dify plugin build artifacts
 *.difypkg
+
+# Aider runtime files (config and ignore file are committed)
+.aider.chat.history.md
+.aider.input.history
+.aider.tags.cache.v3/
+cache.db*
+
+# Local Claude Code settings
+.claude/settings.local.json
