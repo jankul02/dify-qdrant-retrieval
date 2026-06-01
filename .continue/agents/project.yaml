@@ -22,10 +22,10 @@ context:
   - provider: clipboard
 
 rules:
-  - Always follow the session protocol in .continue/rules/session-prompt.md before starting any work.
-  - Always use read_file or @filename before answering about specific files. Never guess file contents.
-  - repo-map contains only signatures, not implementations. Use @file for actual code.
-  - "FILE EDITING: (1) read the file with readFile first. (2) NEVER use edit_existing_file or create_new_file — they cause corruption. ALWAYS use run_terminal_command with 'cat << EOF > filepath' to write files. (3) if a file is corrupted, run 'git checkout HEAD -- <file>' to restore it."
+  - "!start required before any work. See session-prompt.md."
+  - "readFile/@filename before answering about files. No guessing."
+  - "repo-map: signatures only. Use @file for implementations."
+  - "Files: shell MCP (run_command). readFile first. Corrupted: git checkout HEAD -- <file>."
 
 models:
 
@@ -69,12 +69,6 @@ models:
     roles:
       - embed
 
-  - name: Reranker
-    provider: ollama
-    model: "nomic-embed-text:latest"
-    roles:
-      - rerank
-
   - name: bge-reranker
     provider: ollama
     model: "qllama/bge-reranker-v2-m3:latest"
@@ -92,6 +86,13 @@ models:
     model: "nate/instinct"
     roles:
       - autocomplete
+
+mcpServers:
+  - name: shell
+    command: mcp-shell-server
+    args: []
+    env:
+      ALLOW_COMMANDS: "ls,cat,pwd,grep,find,git,python,pytest,make,pip,ruff,sed,awk,head,tail,wc,cut,tr,sort,uniq,diff,cp,mv,mkdir,touch,echo,tee,xargs,jq"
 
 docs:
   - name: Python Docs

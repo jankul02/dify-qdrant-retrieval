@@ -124,6 +124,16 @@
 
 ---
 
+## 2026-06-01 — continue-mcp-shell
+
+| Field | Value |
+|-------|-------|
+| Branch | session/2026-06-01-continue-mcp-shell |
+| Goal | Add mcp-shell-server to devcontainer so Continue can execute shell commands without the VS Code remote terminal problem |
+| Outcome | Done — `~/.claude` bind-mount added to devcontainer.json (persists chat history across rebuilds); `mcp-shell-server` added to `make dev` + both Continue profiles; `ALLOW_COMMANDS` expanded with editing commands (sed, awk, patch, cp, mv, etc.); host profile (`project.yaml`) gets MCP shell with conservative command set; nomic-embed-text reranker replaced with bge-reranker in both profiles; `preferterminalforconfig.md` updated to MCP shell (dropped cat<<EOF); all 8 Continue rules compressed; `scripts/inject_devcontainer.sh` + `make inject` added for cross-repo setup; `docs/dev/recipes/adopt-devcontainer-continue.md` recipe written |
+
+---
+
 ## 2026-05-29 — dify-settings-params
 
 | Field | Value |

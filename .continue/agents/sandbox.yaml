@@ -34,11 +34,10 @@ context:
   - provider: clipboard
 
 rules:
-  - Always follow the session protocol in .continue/rules/session-prompt.md before starting any work.
-  - Always use read_file or @filename before answering about specific files. Never guess file contents.
-  - repo-map contains only signatures, not implementations. Use @file for actual code.
-  - "FILE WRITING: If run_terminal_command triggers an 'Output capture' error due to container isolation, use native file context providers. For writing files, use run_terminal_command with 'cat << 'EOF' > filepath' format non-interactively, or query filesystem tools directly."
-  - "CONTAINER CONTEXT: You are running inside a headless Docker Dev Container. Never use interactive shell commands. Always use silent or batch flags (e.g., ls -l, cat, mkdir -p) and assume output is read asynchronously."
+  - "!start required before any work. See session-prompt.md."
+  - "readFile/@filename before answering about files. No guessing."
+  - "repo-map: signatures only. Use @file for implementations."
+  - "Container: ALL shell via shell MCP (run_command). Never run_terminal_command. Non-interactive flags only."
 models:
   - name: "olQwen3.6-Coder 27B (MXFP8)"
     provider: ollama
@@ -83,13 +82,6 @@ models:
     roles:
       - embed
 
-  - name: Reranker
-    provider: ollama
-    apiBase: http://host.docker.internal:11434
-    model: "nomic-embed-text:latest"
-    roles:
-      - rerank
-
   - name: bge-reranker
     provider: ollama
     apiBase: http://host.docker.internal:11434
@@ -110,6 +102,13 @@ models:
     model: "nate/instinct"
     roles:
       - autocomplete
+
+mcpServers:
+  - name: shell
+    command: mcp-shell-server
+    args: []
+    env:
+      ALLOW_COMMANDS: "ls,cat,pwd,grep,find,git,python,pytest,make,pip,ruff,sed,awk,head,tail,wc,cut,tr,sort,uniq,diff,patch,cp,mv,mkdir,rm,touch,echo,tee,xargs,jq,curl"
 
 docs:
   - name: Python Docs

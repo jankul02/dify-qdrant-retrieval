@@ -29,5 +29,6 @@ Spatial index: functional area → files. Update at every `!end`.
 - `.continue/rules/` — Continue-loaded rules: `session-prompt.md` (ABW + auto-commit), `preferterminalforconfig.md`, `nomarkdownintools.md`, `surgical-python-edits.md`, `project-quickref.md`
 - `.continue/config.yaml` — documentation/legacy reference only (not loaded by Continue)
 - `docs/dev/` — session state, open points, plans, setup, howtos
-- `scripts/` — session_start.sh, session_end.sh, bootstrap.sh, bump_version.py
-- `Makefile` — self-contained targets: `make dev` creates `.venv` + installs deps + downloads dify-plugin CLI; `make pack` builds `.difypkg`; `make bump-patch/minor/major` bumps version, commits, and pushes tag
+- `scripts/` — session_start.sh, session_end.sh, bootstrap.sh, bump_version.py, inject_devcontainer.sh (injects ~/.claude mount + ALLOW_COMMANDS into any repo)
+- `docs/dev/recipes/adopt-devcontainer-continue.md` — step-by-step recipe for transplanting devcontainer + Continue setup to a new repo
+- `Makefile` — self-contained targets: `make dev` creates `.venv` + installs deps + downloads dify-plugin CLI + mcp-shell-server; `make pack` builds `.difypkg`; `make inject` injects standard devcontainer lines; `make bump-patch/minor/major` bumps version, commits, and pushes tag

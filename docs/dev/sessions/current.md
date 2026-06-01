@@ -1,15 +1,15 @@
 # Current Session
 
-**Status:** Closed
+**Status:** Open
 
 <!-- This file is overwritten at each !start. -->
 
 | Field | Value |
 |-------|-------|
-| Branch | session/2026-06-01-aider-performance |
-| Goal | Improve aider performance — reduce verbosity, make it execute tasks rather than narrate or stall |
+| Branch | session/2026-06-01-continue-mcp-shell |
+| Goal | Add mcp-shell-server to devcontainer so Continue can execute shell commands without the VS Code remote terminal problem |
 | Started | 2026-06-01 |
-| Outcome | Removed — aider integration removed; local models (qwen3.6 via Ollama) are too verbose and non-compliant for reliable aider use; `.aider.conf.yml`, `.aiderignore`, `agentic/rules_aider.md` deleted; `.gitignore` simplified |
+| Outcome | Done |
 
 ## Sandbox Setup
 

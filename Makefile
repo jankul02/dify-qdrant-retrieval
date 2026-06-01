@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 
-.PHONY: help dev run pack lint format check map cleanup clean session-merge bump-patch bump-minor bump-major
+.PHONY: help dev run pack lint format check map cleanup clean session-merge bump-patch bump-minor bump-major inject
 
 help: ## Show available targets
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
@@ -14,10 +14,13 @@ DIFY_PLUGIN_ARCH   := $(shell uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/')
 DIFY_PLUGIN_BIN    := .venv/bin/dify-plugin
 DIFY_PLUGIN_URL    := https://github.com/langgenius/dify-plugin-daemon/releases/download/$(DIFY_PLUGIN_VERSION)/dify-plugin-$(DIFY_PLUGIN_OS)-$(DIFY_PLUGIN_ARCH)
 
+inject: ## Inject ~/.claude mount + expanded ALLOW_COMMANDS into a repo (REPO=path, default: .)
+	@sh scripts/inject_devcontainer.sh $(REPO)
+
 dev: ## Create .venv (if needed), install deps, and fetch dify-plugin CLI
 	@echo "→ Setting up environment..."
 	@test -d .venv || uv venv
-	uv pip install --python .venv/bin/python -r requirements.txt ruff dify-plugin
+	uv pip install --python .venv/bin/python -r requirements.txt ruff dify-plugin mcp-shell-server
 	@test -x $(DIFY_PLUGIN_BIN) || \
 	  (echo "→ Downloading dify-plugin CLI $(DIFY_PLUGIN_VERSION) ($(DIFY_PLUGIN_OS)-$(DIFY_PLUGIN_ARCH))..." && \
 	   curl -sL $(DIFY_PLUGIN_URL) -o $(DIFY_PLUGIN_BIN) && chmod +x $(DIFY_PLUGIN_BIN))
