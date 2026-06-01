@@ -178,11 +178,10 @@ cython_debug/
 # Dify plugin build artifacts
 *.difypkg
 
-# Aider runtime files — config and .aiderignore are committed via exceptions below
+# Aider runtime files (if aider is used)
 .aider*
-!.aider.conf.yml
-!.aiderignore
 cache.db*
 
 # Local Claude Code settings
 .claude/settings.local.json
+.claude/.codex/
