@@ -1,6 +1,6 @@
 # Current Session
 
-**Status:** Open
+**Status:** Closed
 
 <!-- This file is overwritten at each !start. -->
 
