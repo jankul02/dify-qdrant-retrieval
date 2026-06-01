@@ -1,15 +1,15 @@
 # Current Session
 
-**Status:** Open
+**Status:** Closed
 
 <!-- This file is overwritten at each !start. -->
 
 | Field | Value |
 |-------|-------|
-| Branch | session/2026-06-01-continue-mcp-shell |
-| Goal | Add mcp-shell-server to devcontainer so Continue can execute shell commands without the VS Code remote terminal problem |
+| Branch | main (direct) |
+| Goal | Investigate Continue apply-model switching; commit Makefile + recipe changes |
 | Started | 2026-06-01 |
-| Outcome | Done |
+| Outcome | Done — removed MCP file-writing rule from project.yaml (was preventing Continue's apply flow); committed Makefile host-PATH mcp-shell-server install and adopt recipe PATH check; project.yaml/sandbox.yaml pre-existing tool_use + role cleanup committed |
 
 ## Sandbox Setup
 

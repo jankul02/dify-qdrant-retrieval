@@ -124,6 +124,16 @@
 
 ---
 
+## 2026-06-01 — continue-apply-model
+
+| Field | Value |
+|-------|-------|
+| Branch | main (direct) |
+| Goal | Investigate Continue apply-model switching; commit Makefile + recipe changes |
+| Outcome | Done — removed MCP file-writing rule from project.yaml (was blocking Continue's native apply flow); committed Makefile host-PATH mcp-shell-server install and adopt recipe PATH check; project.yaml/sandbox.yaml pre-existing tool_use + role cleanup committed |
+
+---
+
 ## 2026-06-01 — continue-mcp-shell
 
 | Field | Value |

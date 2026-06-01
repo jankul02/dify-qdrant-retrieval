@@ -48,7 +48,6 @@ models:
       - edit
       - apply
     capabilities:
-      - tool_use
       - image_input
       - vision
     defaultCompletionOptions:

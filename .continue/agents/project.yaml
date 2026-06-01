@@ -25,7 +25,6 @@ rules:
   - "!start required before any work. See session-prompt.md."
   - "readFile/@filename before answering about files. No guessing."
   - "repo-map: signatures only. Use @file for implementations."
-  - "Files: shell MCP (run_command). readFile first. Corrupted: git checkout HEAD -- <file>."
 
 models:
 
@@ -34,10 +33,7 @@ models:
     model: "qwen3.6:27b-coding-mxfp8"
     roles:
       - chat
-      - edit
-      - apply
     capabilities:
-      - tool_use
       - image_input
       - vision
     defaultCompletionOptions:
