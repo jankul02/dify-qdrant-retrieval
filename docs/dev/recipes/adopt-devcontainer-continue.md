@@ -133,9 +133,14 @@ Also add `mcp-shell-server` to the pip install line in `make dev` if present.
 grep '\.claude' .devcontainer/devcontainer.json   # mount present
 grep 'sed' .continue/agents/sandbox.yaml           # ALLOW_COMMANDS expanded
 grep 'mcp-shell-server' .devcontainer/Dockerfile   # tool in image
+which mcp-shell-server                             # on host PATH (needed by Continue)
 ```
 
-All three should return a match.
+If `which mcp-shell-server` fails, install it on host PATH:
+```sh
+pip install --user mcp-shell-server
+```
+`make dev` does this automatically after the first run.
 
 ---
 

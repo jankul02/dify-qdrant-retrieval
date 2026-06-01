@@ -21,6 +21,7 @@ dev: ## Create .venv (if needed), install deps, and fetch dify-plugin CLI
 	@echo "→ Setting up environment..."
 	@test -d .venv || uv venv
 	uv pip install --python .venv/bin/python -r requirements.txt ruff dify-plugin mcp-shell-server
+	@python3 -m pip install --user --quiet mcp-shell-server
 	@test -x $(DIFY_PLUGIN_BIN) || \
 	  (echo "→ Downloading dify-plugin CLI $(DIFY_PLUGIN_VERSION) ($(DIFY_PLUGIN_OS)-$(DIFY_PLUGIN_ARCH))..." && \
 	   curl -sL $(DIFY_PLUGIN_URL) -o $(DIFY_PLUGIN_BIN) && chmod +x $(DIFY_PLUGIN_BIN))
