@@ -25,6 +25,7 @@ Spatial index: functional area → files. Update at every `!end`.
 ## Dev support (preset)
 - `agentic/` — agent rules for Claude Code and Continue; ABW (Always Be Working) mode enabled inside sessions
 - `.continue/agents/project.yaml` — named Continue profile ("Dify Qdrant Retrieval Plugin"); activate in VS Code → Continue profile selector
+- `.continue/agents/sandbox.yaml` — Continue profile for devcontainer ("…(sandbox)"); routes Ollama via `host.docker.internal:11434`
 - `.continue/rules/` — Continue-loaded rules: `session-prompt.md` (ABW + auto-commit), `preferterminalforconfig.md`, `nomarkdownintools.md`, `surgical-python-edits.md`, `project-quickref.md`
 - `.continue/config.yaml` — documentation/legacy reference only (not loaded by Continue)
 - `docs/dev/` — session state, open points, plans, setup, howtos

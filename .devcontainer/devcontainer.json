@@ -22,12 +22,13 @@
      "OLLAMA_API_BASE": "http://host.docker.internal:11434"
    },
    "remoteUser": "vscode",
+   
    "customizations": {
      "vscode": {
        "extensions": [
          "ms-python.python",
          "ms-python.vscode-pylance"
-       ]
+      ]
      }
    },
    // Installs project deps at container start; silently skips if no requirements.txt.
