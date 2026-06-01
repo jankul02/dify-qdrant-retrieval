@@ -84,6 +84,16 @@
 
 ---
 
+## 2026-06-01 — aider-performance
+
+| Field | Value |
+|-------|-------|
+| Branch | session/2026-06-01-aider-performance |
+| Goal | Improve aider performance — reduce verbosity, make it execute tasks |
+| Outcome | Removed — qwen3.6 via Ollama is too verbose and non-compliant for reliable aider use (architect mode loops, thinking can't be suppressed, model ignores instructions); `.aider.conf.yml`, `.aiderignore`, `agentic/rules_aider.md` deleted; `.gitignore` simplified |
+
+---
+
 ## 2026-05-31 — devcontainer-sandbox
 
 | Field | Value |

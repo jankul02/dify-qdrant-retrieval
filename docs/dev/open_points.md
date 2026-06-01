@@ -9,5 +9,4 @@
 <!-- none yet -->
 
 ## Open questions
-- [P2] `.aider.conf.yml` model `qwen3.6:27b-coding-mxfp8` not in `ollama list` on host — pull it or rename to `qwen3-coder:latest`
-- [P3] `max-tokens: 8192` removed from `.aider.conf.yml` — was capping runaway Ollama responses; restore if qwen3-coder generates overlong outputs
+<!-- none yet -->

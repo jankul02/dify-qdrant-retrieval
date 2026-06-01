@@ -1,9 +1,0 @@
-# Files aider should not read or edit
-*.difypkg
-*.egg-info/
-__pycache__/
-.venv/
-dist/
-build/
-.git/
-docs/dev/sessions/
