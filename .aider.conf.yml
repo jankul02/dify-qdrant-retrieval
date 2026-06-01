@@ -1,20 +1,21 @@
 # ============================================================================
-# .aider.conf.yml — Aider config for devcontainer (offline via Ollama)
+# .aider.conf.yml — Aider config for host and devcontainer (offline via Ollama)
 # ============================================================================
 #
-# USE ONLY INSIDE THE DEVCONTAINER.
-# host.docker.internal resolves only from inside Docker, not from the host.
+# Works on BOTH the host and inside the devcontainer.
+# Ollama endpoint is resolved automatically:
+#   - Host:          http://localhost:11434  (aider default)
+#   - Devcontainer:  http://host.docker.internal:11434  (via OLLAMA_API_BASE in devcontainer.json)
 #
-# OLLAMA_API_BASE is set in devcontainer.json → http://host.docker.internal:11434
-# Models mirror .continue/agents/sandbox.yaml — run `ollama list` on the host
-# to verify they are pulled.
+# Models are pulled from host Ollama — run `ollama list` to verify.
 #
 # HOW TO USE:
-#   1. Cmd+Shift+P → "Dev Containers: Reopen in Container"
-#   2. Open a terminal inside the container
-#   3. aider <file>                        — edit a specific file
-#      aider                               — let aider pick relevant files
-#      aider --model ollama/<model> <file> — override model for this run
+#   On host:
+#     aider <file>                         — edit a specific file
+#     aider                                — let aider pick relevant files
+#     aider --model ollama/<model> <file>  — override model for this run
+#   In devcontainer:
+#     Same commands — OLLAMA_API_BASE routes to host Ollama automatically.
 #
 # NOTE: auto-commits is off — git flow goes through the session workflow (!end).
 # ============================================================================
@@ -31,20 +32,17 @@ read:
 # Architect mode: big model reasons about what to change, small model applies the diffs.
 architect: true
 
-# Main model — thinks about WHAT to change (matches "olQwen3.6-Coder 27B" in sandbox.yaml)
-model: ollama/qwen3.6:27b-coding-mxfp8
+# Main model — thinks about WHAT to change
+model: ollama_chat/qwen3.6:27b-coding-mxfp8
 
-# Editor model — applies the actual diffs (fast, matches olqwen2.5-coder in sandbox.yaml)
-editor-model: ollama/qwen2.5-coder:7b
+# Editor model — applies the actual diffs (Fast-Apply is purpose-built for this)
+editor-model: ollama/hf.co/dat-lequoc/Fast-Apply-1.5B-v1.0_GGUF:latest
 
 # Weak model — commit messages and trivial formatting
-weak-model: ollama/qwen2.5-coder:7b
+weak-model: ollama/qwen2.5-coder:1.5b
 
 # Let the session workflow (!end) handle all commits.
 auto-commits: false
-
-# Cap generation to prevent runaway/looping responses from Ollama models.
-max-tokens: 8192
 
 # Only refresh the repo map when files change, not on every message.
 map-refresh: auto

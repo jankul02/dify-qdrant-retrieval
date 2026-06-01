@@ -84,6 +84,16 @@
 
 ---
 
+## 2026-05-31 — devcontainer-sandbox
+
+| Field | Value |
+|-------|-------|
+| Branch | session/2026-05-31-devcontainer-sandbox |
+| Goal | Set up devcontainer sandbox for isolated development; install aider on host |
+| Outcome | Done — aider installed on host (pip, 0.86.2); `.aider.conf.yml` updated for host+container use (ollama_chat prefix, Fast-Apply editor, qwen2.5-coder:1.5b weak model); `agentic/rules_aider.md` improved (thinking-mode suppression, /run execution model, session start sequence); devcontainer sandboxing fixed (`--network=host` removed — `--add-host` is sufficient; `nomarkdownintools.md` devcontainer paragraph moved to `sandbox.yaml` rules where it is sandbox-scoped); `.gitignore` aider patterns simplified with allowlist exceptions. Open: `qwen3.6:27b-coding-mxfp8` not in `ollama list` — pull or rename to `qwen3-coder:latest`; `max-tokens` cap removed from aider config |
+
+---
+
 ## 2026-05-31 — fix-external-knowledge-connection
 
 | Field | Value |

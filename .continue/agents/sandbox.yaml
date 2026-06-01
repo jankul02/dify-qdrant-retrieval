@@ -37,10 +37,9 @@ rules:
   - Always follow the session protocol in .continue/rules/session-prompt.md before starting any work.
   - Always use read_file or @filename before answering about specific files. Never guess file contents.
   - repo-map contains only signatures, not implementations. Use @file for actual code.
-  - "FILE EDITING: (1) read the file with readFile first. (2) NEVER use edit_existing_file or create_new_file — they cause corruption. ALWAYS use run_terminal_command with 'cat << EOF > filepath' to write files. (3) if a file is corrupted, run 'git checkout HEAD -- <file>' to restore it."
-
+  - "FILE WRITING: If run_terminal_command triggers an 'Output capture' error due to container isolation, use native file context providers. For writing files, use run_terminal_command with 'cat << 'EOF' > filepath' format non-interactively, or query filesystem tools directly."
+  - "CONTAINER CONTEXT: You are running inside a headless Docker Dev Container. Never use interactive shell commands. Always use silent or batch flags (e.g., ls -l, cat, mkdir -p) and assume output is read asynchronously."
 models:
-
   - name: "olQwen3.6-Coder 27B (MXFP8)"
     provider: ollama
     apiBase: http://host.docker.internal:11434
