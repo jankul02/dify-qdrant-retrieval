@@ -1,6 +1,7 @@
 # Dify Qdrant Retrieval Plugin — Agent Entry Point
 
-**Read these before doing anything else:**
+**For VS Code Copilot:** `.copilot-instructions.md` (auto-loaded, offline-capable)
+**For Claude Code / Continue:** Read these before doing anything else:
 1. `agentic/rules_common.md`
 2. `agentic/rules_project.md`
 3. `agentic/rules_claude.md`

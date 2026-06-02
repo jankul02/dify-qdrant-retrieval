@@ -6,10 +6,10 @@
 
 | Field | Value |
 |-------|-------|
-| Branch | main (direct) |
-| Goal | Investigate Continue apply-model switching; commit Makefile + recipe changes |
+| Branch | session/2026-06-01-continue-tool-cleanup |
+| Goal | Clean up Continue tool usage: (1) prevent Continue from using MCP shell commands to edit instead of switching to apply model; (2) make Continue surface MCP shell command failures/problems |
 | Started | 2026-06-01 |
-| Outcome | Done — removed MCP file-writing rule from project.yaml (was preventing Continue's apply flow); committed Makefile host-PATH mcp-shell-server install and adopt recipe PATH check; project.yaml/sandbox.yaml pre-existing tool_use + role cleanup committed |
+| Outcome | Done — Continue rules compressed (removed nomarkdownintools, preferterminalforconfig, surgical-python-edits); doc-sync.md added; `.copilot-instructions.md` created for VS Code Copilot session protocol (offline-capable, ABW mode, !start/!end) |
 
 ## Sandbox Setup
 

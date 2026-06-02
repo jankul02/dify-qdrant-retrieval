@@ -4,6 +4,16 @@
 
 ---
 
+## 2026-06-02 — copilot-session-protocol
+
+| Field | Value |
+|-------|-------|
+| Branch | session/2026-06-01-continue-tool-cleanup |
+| Goal | Set up VS Code Copilot session protocol (!start/!end, ABW mode) as offline-capable alternative to Continue |
+| Outcome | Done — `.copilot-instructions.md` created (auto-loaded by Copilot); session protocol adapted for VS Code native tools (Read/Edit, not shell); PROJECT_MAP.md updated; Continue rules compressed (3 → 3 remaining rules) |
+
+---
+
 ## 2026-05-29 — continue-qwen3
 
 | Field | Value |
