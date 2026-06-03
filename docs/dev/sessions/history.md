@@ -4,6 +4,16 @@
 
 ---
 
+## 2026-06-03 — repair-make-devcontainer
+
+| Field | Value |
+|-------|-------|
+| Branch | main |
+| Goal | Repair devcontainer `make` availability and test session-end flow |
+| Outcome | Updated `.devcontainer/devcontainer.json` to verify `make` at startup; confirmed `scripts/session_end.sh` runs cleanly. |
+
+---
+
 ## 2026-06-03 — adopt-devcontainer-from-testdifyollama
 
 | Field | Value |
