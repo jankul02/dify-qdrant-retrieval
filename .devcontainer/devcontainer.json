@@ -34,5 +34,5 @@
    },
   // Installs project deps at container start; silently skips if no requirements.txt.
   // Also verify `make` is present (installed at build time in the Dockerfile).
-  "postCreateCommand": "bash -lc 'pip install --user -r requirements.txt 2>/dev/null || true; if ! command -v make >/dev/null 2>&1; then echo \"ERROR: make not found in container. Ensure Dockerfile installs make.\"; exit 1; fi'"
+  "postCreateCommand": "sh -lc 'pip install --user -r requirements.txt 2>/dev/null || true; if ! command -v make >/dev/null 2>&1; then echo \"ERROR: make not found in container. Ensure Dockerfile installs make.\"; exit 1; fi'"
 }
