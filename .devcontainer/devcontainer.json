@@ -1,5 +1,5 @@
 {
-   "name": "python-agent",
+   "name": "document-intelligence-pipeline",
    "build": {
      "dockerfile": "Dockerfile",
      "context": ".."
@@ -7,9 +7,6 @@
    "workspaceFolder": "/workspace",
    "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
    "mounts": [
-     // Mount Ollama logs read-only for observability without Docker socket access.
-     // Remove this line if ~/.ollama/logs does not exist on your host.
-     "source=${localEnv:HOME}/.ollama/logs,target=/host-logs/ollama,type=bind,readonly=true",
      // Persist Claude Code conversation history and settings across container rebuilds.
      "source=${localEnv:HOME}/.claude,target=/home/vscode/.claude,type=bind,consistency=cached"
    ],
@@ -24,7 +21,7 @@
      "OLLAMA_API_BASE": "http://host.docker.internal:11434"
    },
    "remoteUser": "vscode",
-   
+
    "customizations": {
      "vscode": {
        "extensions": [

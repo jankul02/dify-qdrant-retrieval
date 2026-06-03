@@ -3,12 +3,12 @@
 # ============================================================================
 #
 # HOW TO ACTIVATE:
-#   In VS Code → Continue, select "Dify Qdrant Retrieval Plugin" as the
+#   In VS Code → Continue, select "Dify + Python + Docker (M5 Max 128GB)" as the
 #   active configuration profile (above the chat input box).
 #
 # ============================================================================
 
-name: "Dify Qdrant Retrieval Plugin"
+name: "Dify + Python + Docker (M5 Max 128GB)"
 version: 1.0.0
 schema: v1
 
@@ -33,7 +33,10 @@ models:
     model: "qwen3.6:27b-coding-mxfp8"
     roles:
       - chat
+      - edit
+      - apply
     capabilities:
+      - tool_use
       - image_input
       - vision
     defaultCompletionOptions:
@@ -94,9 +97,15 @@ docs:
   - name: Python Docs
     startUrl: https://docs.python.org/3/
     rootUrl: https://docs.python.org/
+  - name: FastAPI
+    startUrl: https://fastapi.tiangolo.com/
+    rootUrl: https://fastapi.tiangolo.com/
   - name: Dify Docs
     startUrl: https://docs.dify.ai/
     rootUrl: https://docs.dify.ai/
+  - name: Docker Docs
+    startUrl: https://docs.docker.com/
+    rootUrl: https://docs.docker.com/
   - name: Continue Docs
     startUrl: https://docs.continue.dev/
     rootUrl: https://docs.continue.dev/

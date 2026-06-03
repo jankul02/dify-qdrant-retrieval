@@ -2,7 +2,7 @@ FROM python:3.12-slim
 
 # System deps + Node.js LTS (required by Claude Code CLI)
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        git curl ca-certificates gnupg \
+        git curl ca-certificates gnupg make \
     && curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
     && apt-get install -y --no-install-recommends nodejs \
     && apt-get clean && rm -rf /var/lib/apt/lists/*

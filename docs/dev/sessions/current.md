@@ -1,50 +1,23 @@
 # Current Session
 
-**Status:** Closed
+**Status:** Open
 
 <!-- This file is overwritten at each !start. -->
 
 | Field | Value |
 |-------|-------|
-| Branch | session/2026-06-01-continue-tool-cleanup |
-| Goal | Clean up Continue tool usage: (1) prevent Continue from using MCP shell commands to edit instead of switching to apply model; (2) make Continue surface MCP shell command failures/problems |
-| Started | 2026-06-01 |
-| Outcome | Done — Continue rules compressed (removed nomarkdownintools, preferterminalforconfig, surgical-python-edits); doc-sync.md added; `.copilot-instructions.md` created for VS Code Copilot session protocol (offline-capable, ABW mode, !start/!end) |
+| Branch | main |
+| Goal | Take over devcontainer settings from last session repo https://github.com/jankul02/testdifyollama |
+| Started | 2026-06-03 |
+| Outcome | Applied `.devcontainer` and Continue agent profiles from `testdifyollama` (updated `.devcontainer/*`, `.continue/agents/*`). |
 
-## Sandbox Setup
+## Notes
 
-The devcontainer was installed via:
-```bash
-bash ~/projects/dev-sandbox/scripts/install.sh python-agent ~/projects/dify-qdrant-retrieval
-```
+- Source to copy devcontainer settings from: `https://github.com/jankul02/testdifyollama`
+- Working in-place on `main` per developer preference (chose to stay on current branch).
 
-This created:
-- `.devcontainer/devcontainer.json` — container config with Ollama bridge, security hardening (no API key passthrough)
-- `.devcontainer/Dockerfile` — Python 3.12-slim + Node.js 22 + Claude Code CLI
-- `.continue/agents/sandbox.yaml` — Continue profile "(sandbox)" routing Ollama through `host.docker.internal:11434`
+## Next Steps
 
-## Claude Code CLI Authentication
-
-No `ANTHROPIC_API_KEY` is forwarded from the host. Instead, authenticate inside the container:
-
-1. Reopen in devcontainer (`Cmd+Shift+P → Dev Containers: Reopen in Container`)
-2. Open a terminal inside the container
-3. Run `claude login` — follows OAuth flow (browser or code-based)
-4. Credentials stored in `~/.claude/` inside the container
-
-## Continue Agents
-
-Two profiles available:
-- **`project.yaml`** — "Dify Qdrant Retrieval Plugin" — Ollama on `localhost:11434` (host use)
-- **`sandbox.yaml`** — "Dify Qdrant Retrieval Plugin (sandbox)" — Ollama on `host.docker.internal:11434` (container use)
-
-Both are pure Ollama — no Anthropic models configured.
-
-## Activation Steps
-
-1. `git add .devcontainer/ .continue/agents/sandbox.yaml && git commit -m 'add devcontainer sandbox'`
-2. Open `dify-qdrant-retrieval` in VS Code
-3. `Cmd+Shift+P` → `Dev Containers: Reopen in Container`
-4. In container terminal: `claude login`
-5. In Continue panel, switch to profile ending with `(sandbox)`
-6. On Linux: verify `--add-host=host.docker.internal:host-gateway` in `devcontainer.json` runArgs (already present)
+1. Inspect and copy `.devcontainer/` and `.continue/agents/` from the source repo.
+2. Apply necessary files to this workspace and run `make inject` if needed.
+3. Update this session file with outcome when done.

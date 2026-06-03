@@ -4,6 +4,15 @@
 
 ---
 
+## 2026-06-03 — adopt-devcontainer-from-testdifyollama
+
+| Field | Value |
+|-------|-------|
+| Branch | main |
+| Goal | Take over devcontainer settings from last session repo https://github.com/jankul02/testdifyollama |
+| Outcome | Applied `.devcontainer` and Continue agent profiles; updated `docs/dev/sessions/current.md`. |
+
+
 ## 2026-06-02 — copilot-session-protocol
 
 | Field | Value |
