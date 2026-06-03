@@ -34,6 +34,7 @@ Spatial index: functional area → files. Update at every `!end`.
 - `docs/dev/sessions/current.md` — active session state (branch, goal, start time, outcome)
 - `docs/dev/sessions/history.md` — append-only session log
 - `docs/dev/recipes/adopt-devcontainer-continue.md` — transplant devcontainer + Continue to new repo
+- `docs/dev/zero-friction-devcontainer.md` — portable zero-friction devcontainer setup guide (friction points, fixes, test checklist)
 
 ## Dev support (preset)
 - `.copilot-instructions.md` — VS Code Copilot agent entry point; session protocol (`!start`/`!end`), ABW mode, offline-capable; auto-loaded by Copilot

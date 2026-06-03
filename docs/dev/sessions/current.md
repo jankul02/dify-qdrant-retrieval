@@ -7,16 +7,20 @@
 | Field | Value |
 |-------|-------|
 | Branch | main |
-| Goal | Repair devcontainer `make` availability and confirm session close behavior |
+| Goal | Transplant devcontainer setup from testdifyollama — document takeover and test through container generation |
 | Started | 2026-06-03 |
-| Outcome | Patched `.devcontainer/devcontainer.json` to verify `make` on post-create; confirmed `scripts/session_end.sh` executes cleanly. |
+| Outcome | Transplanted Docker CLI + Compose plugin, Docker socket mount, zero-friction VS Code settings from testdifyollama's docker-compose-fix session. Container builds and all tools verified (make, docker 29.5.2, python 3.12.13). Created portable zero-friction devcontainer doc. |
 
 ## Notes
 
-- `make` is installed in `.devcontainer/Dockerfile` and now verified during container startup.
-- Session-end script was tested and displayed expected next-step instructions.
+- Docker CLI + Compose plugin installed in container (Docker version 29.5.2)
+- `make` verified at `/usr/bin/make`
+- Python 3.12.13 available
+- Zero-friction settings added to `.vscode/settings.json`
+- Azure Cosmos DB extension added to devcontainer extensions list
 
 ## Next Steps
 
-1. Rebuild devcontainer to confirm the new `make` verification works in practice.
-2. Push the session docs changes if you want this closed session recorded remotely.
+1. [DONE] Read session docs from `jankul02/testdifyollama` for the latest devcontainer session.
+2. [DONE] Extract relevant devcontainer configuration and document the takeover.
+3. [DONE] Test through container generation — build succeeded, all tools verified.

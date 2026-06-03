@@ -1,38 +1,38 @@
 {
-   "name": "document-intelligence-pipeline",
-   "build": {
-     "dockerfile": "Dockerfile",
-     "context": ".."
-   },
-   "workspaceFolder": "/workspace",
-   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
-   "mounts": [
-     // Persist Claude Code conversation history and settings across container rebuilds.
-     "source=${localEnv:HOME}/.claude,target=/home/vscode/.claude,type=bind,consistency=cached"
-   ],
-   "runArgs": [
-     "--cap-drop=ALL",
-     "--security-opt=no-new-privileges",
-     // Required on Linux; harmless on macOS Docker Desktop (host.docker.internal already set).
-     "--add-host=host.docker.internal:host-gateway"
-   ],
-   "remoteEnv": {
-     "OLLAMA_HOST": "http://host.docker.internal:11434",
-     "OLLAMA_API_BASE": "http://host.docker.internal:11434"
-   },
-   "remoteUser": "vscode",
+    "name": "dify-qdrant-retrieval",
+    "build": {
+      "dockerfile": "Dockerfile",
+      "context": ".."
+    },
+    "workspaceFolder": "/workspace",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+    "mounts": [
+      // Persist Claude Code conversation history and settings across container rebuilds.
+      "source=${localEnv:HOME}/.claude,target=/home/vscode/.claude,type=bind,consistency=cached",
+      // Docker socket — enables full debugging cycle (make up/restart/logs/status) from inside the devcontainer.
+      // Security note: this gives the container access to the host Docker daemon. Acceptable for local dev on your own machine.
+      "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+    ],
+    "runArgs": [
+      "--security-opt=no-new-privileges",
+      // Required on Linux; harmless on macOS Docker Desktop (host.docker.internal already set).
+      "--add-host=host.docker.internal:host-gateway"
+    ],
+    "remoteEnv": {
+      "OLLAMA_HOST": "http://host.docker.internal:11434",
+      "OLLAMA_API_BASE": "http://host.docker.internal:11434"
+    },
+    "remoteUser": "vscode",
 
-   "customizations": {
-     "vscode": {
-       "extensions": [
-         "ms-python.python",
-         "ms-python.vscode-pylance",
-         "anthropic.claude-code",
-         "continue.continue"
-      ]
-     }
-   },
-  // Installs project deps at container start; silently skips if no requirements.txt.
-  // Also verify `make` is present (installed at build time in the Dockerfile).
-  "postCreateCommand": "sh -lc 'pip install --user -r requirements.txt 2>/dev/null || true; if ! command -v make >/dev/null 2>&1; then echo \"ERROR: make not found in container. Ensure Dockerfile installs make.\"; exit 1; fi'"
-}
+    "customizations": {
+      "vscode": {
+        "extensions": [
+          "ms-python.python",
+          "ms-python.vscode-pylance",
+          "ms-azuretools.vscode-cosmosdb",
+          "continue.continue"
+       ]
+      }
+    },
+    // Installs project deps at container start; silently skips if no requirements.txt.
+    "postCreateCommand": "sh -lc 'pip install --user -r requirements.txt 2>/dev/null || true; if ! command -v make >/dev/null 2>&1; then echo \"ERROR: make not found in container. Ensure Dockerfile installs make.\"; exit 1; fi'"
